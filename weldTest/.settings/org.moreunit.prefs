@@ -1,0 +1,6 @@
+#Tue Jul 12 23:31:30 CEST 2011
+eclipse.preferences.version=1
+org.moreunit.suffixes=
+org.moreunit.test_type=testng
+org.moreunit.unitsourcefolder=weldTest\:src/main/java\:weldTest\:src/test/java
+org.moreunit.useprojectsettings=true

@@ -16,6 +16,7 @@
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <!-- The version of Weld extensions in use -->
       <weld.extensions.version>1.0.0-CR2</weld.extensions.version>
+      <hibernate.version>4.0.0.Beta3</hibernate.version>
    </properties>
 
    <repositories>
@@ -130,23 +131,23 @@
       <dependency>
       	<groupId>org.hibernate</groupId>
       	<artifactId>hibernate-core</artifactId>
-      	<version>3.6.5.Final</version>
+      	<version>${hibernate.version}</version>
       </dependency>
-      <dependency>
-      	<groupId>org.hibernate</groupId>
-      	<artifactId>hibernate-annotations</artifactId>
-      	<version>3.5.6-Final</version>
-      </dependency>
+<!--       <dependency> -->
+<!--       	<groupId>org.hibernate</groupId> -->
+<!--       	<artifactId>hibernate-annotations</artifactId> -->
+<!--       	<version>${hibernate.version}</version> -->
+<!--       </dependency> -->
       <dependency>
       	<groupId>org.hibernate</groupId>
       	<artifactId>hibernate-entitymanager</artifactId>
-      	<version>3.5.6-Final</version>
+      	<version>${hibernate.version}</version>
       	<scope>runtime</scope>
       </dependency>
       <dependency>
       	<groupId>javax.transaction</groupId>
       	<artifactId>jta</artifactId>
-      	<version>1.1</version>
+      	<version>1.1</version><!--$NO-MVN-MAN-VER$-->
       </dependency>
       <dependency>
   		<groupId>org.cloudfoundry</groupId>

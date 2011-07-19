@@ -1,32 +1,19 @@
 package fr.loyat;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.spi.PersistenceProvider;
-import javax.persistence.spi.PersistenceProviderResolverHolder;
-
-import org.cloudfoundry.runtime.env.CloudEnvironment;
-import org.cloudfoundry.runtime.env.MysqlServiceInfo;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import fr.loyat.domain.User;
 
 @Named("env")
+@RequestScoped
 public class Env {
 
 	Logger logger = Logger.getLogger(this.getClass().getName());
@@ -35,29 +22,50 @@ public class Env {
 	@Inject
 	ConnexionManager connexionManager;
 	
+	
 	EntityManager getEntityManager(){
 		return connexionManager.getEntityManager();
 	}
 	
 	public String getEnv() {
 		System.out.println("VCAP_SERVICES");
-		logger.log(Level.SEVERE, "VCAP_SERVICES");
+		//logger.log(Level.SEVERE, "VCAP_SERVICES");
 		// String env = System.getenv("VCAP_SERVICES");
-		User user = new User("JM", "De La Tour",
-				new GregorianCalendar().get(Calendar.SECOND));
-		getEntityManager().getTransaction().begin();
-		getEntityManager().persist(user);
-		getEntityManager().getTransaction().commit();
+		
 		return "";
 	}
 
+	public String  addUser(){
+		User user = new User("JM", "De La Tour",
+				new GregorianCalendar().get(Calendar.SECOND));
+		getEntityManager().persist(user);
+		getEntityManager().getTransaction().begin();
+		getEntityManager().getTransaction().commit();
+		users=null;
+		return "";
+	}
+	
+	public String modifyUser(){
+		User user = users.get(0);
+		user.setFirstName(user.getFirstName()+ "X");
+		getEntityManager().getTransaction().begin();
+		getEntityManager().getTransaction().commit();
+		return "";
+	}
+	
+	List<User> users;
+	
+	@SuppressWarnings("unchecked")
 	public List<User>getUsers() {
-		@SuppressWarnings("unchecked")
-		List<User> resultList = (List<User>) connexionManager.getEntityManager().createQuery("from User").getResultList();
-		return resultList;
+		if (users == null) {
+			System.out.println("lecture users");
+			users = (List<User>) getEntityManager().createQuery("from User").getResultList();
+		}
+		return users;
 	}
 
-
+	
+	
 
 
 

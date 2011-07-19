@@ -7,6 +7,12 @@ import javax.persistence.Version;
 
 @Entity
 public class User {
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 	@Id
 	@GeneratedValue
 	int id;
@@ -14,6 +20,9 @@ public class User {
 	@Version
 	int version;
 
+	public int getVersion() {
+		return version;
+	}
 	String firstName;
 	String lastName;
 	int age;

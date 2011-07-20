@@ -26,14 +26,18 @@ public class Env implements Serializable{
 
 	Logger logger = Logger.getLogger(this.getClass().getName());
 	
-	//@Inject
-	//public Env(EntityManager entityManager){
-	//	em = entityManager;
-	//}
+	@Inject
+	public Env(EntityManager entityManager){
+		em = entityManager;
+	}
+	
+	public Env(){
+		em=null;
+	}
 	
 	// @Inject ConnexionManager connexionManager;
 	
-	@Inject EntityManager em;
+	final EntityManager em;
 	
 	EntityManager getEntityManager(){
 		return em;

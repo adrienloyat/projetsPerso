@@ -1,10 +1,12 @@
 package fr.loyat;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,17 +16,27 @@ import fr.loyat.domain.User;
 
 @Named("env")
 @RequestScoped
-public class Env {
+public class Env implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8291917715085214158L;
+
 
 	Logger logger = Logger.getLogger(this.getClass().getName());
 	
+	//@Inject
+	//public Env(EntityManager entityManager){
+	//	em = entityManager;
+	//}
 	
-	@Inject
-	ConnexionManager connexionManager;
+	// @Inject ConnexionManager connexionManager;
 	
+	@Inject EntityManager em;
 	
 	EntityManager getEntityManager(){
-		return connexionManager.getEntityManager();
+		return em;
 	}
 	
 	public String getEnv() {
@@ -58,13 +70,15 @@ public class Env {
 	@SuppressWarnings("unchecked")
 	public List<User>getUsers() {
 		if (users == null) {
-			System.out.println("lecture users");
 			users = (List<User>) getEntityManager().createQuery("from User").getResultList();
 		}
 		return users;
 	}
 
-	
+	@PostConstruct
+	public void postConstruct(){
+		System.out.println("postConstruct " + this);
+	}
 	
 
 

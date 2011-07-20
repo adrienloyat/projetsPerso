@@ -7,15 +7,12 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
+import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Transient;
 import javax.persistence.spi.PersistenceProvider;
 import javax.persistence.spi.PersistenceProviderResolverHolder;
 
@@ -25,7 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-@Named
 @SessionScoped
 public class ConnexionManager implements Serializable{
 	
@@ -126,6 +122,7 @@ public class ConnexionManager implements Serializable{
 
 	private EntityManager em;
 
+	@Produces @SessionScoped
 	public  EntityManager getEntityManager() {
 		if (em == null || !em.isOpen()) {
 			em = getEntityManagerFactory().createEntityManager();
@@ -134,5 +131,8 @@ public class ConnexionManager implements Serializable{
 		return em; 
 	}
 
-	
+	@PostConstruct
+	public void postConstruct(){
+		System.out.println("postConstruct " + this);
+	}
 }

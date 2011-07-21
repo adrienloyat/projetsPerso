@@ -13,6 +13,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import fr.loyat.domain.User;
+import fr.loyat.interceptors.Transactional;
 
 @Named("env")
 @RequestScoped
@@ -51,21 +52,23 @@ public class Env implements Serializable{
 		return "";
 	}
 
+	@Transactional
 	public String  addUser(){
 		User user = new User("JM", "De La Tour",
 				new GregorianCalendar().get(Calendar.SECOND));
 		getEntityManager().persist(user);
-		getEntityManager().getTransaction().begin();
-		getEntityManager().getTransaction().commit();
+		//getEntityManager().getTransaction().begin();
+		//getEntityManager().getTransaction().commit();
 		users=null;
 		return "";
 	}
 	
+	@Transactional
 	public String modifyUser(){
 		User user = users.get(0);
 		user.setFirstName(user.getFirstName()+ "X");
-		getEntityManager().getTransaction().begin();
-		getEntityManager().getTransaction().commit();
+		//getEntityManager().getTransaction().begin();
+		//getEntityManager().getTransaction().commit();
 		return "";
 	}
 	

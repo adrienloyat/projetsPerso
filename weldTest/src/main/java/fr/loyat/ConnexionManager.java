@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -131,6 +132,11 @@ public class ConnexionManager implements Serializable{
 		return em; 
 	}
 
+	void close(@Disposes EntityManager em) {
+		System.out.println("dispose entityManager " + em);
+		em.close();
+	}
+	
 	@PostConstruct
 	public void postConstruct(){
 		System.out.println("postConstruct " + this);

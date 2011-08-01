@@ -21,3 +21,14 @@ function regExpFn2(){
 	var texte='f-c.o,u-.p';
 	return texte.replace(/\W/g, ',');
 }
+
+function testParam(){
+	for (var i = 0;i<testParam.length;i++){
+		alert('param ' + i + ' : ' + arguments[i]);
+	}
+}
+
+function fonctionSurI(i,f){
+	return f(i);
+}
+
